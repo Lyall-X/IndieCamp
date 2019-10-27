@@ -136,11 +136,11 @@ void ULoginUserWidget::RequestComplete(FHttpRequestPtr RequestPtr, FHttpResponse
 		if (!Nickname.IsEmpty())
 		{
 			/** 获取到自定义的GameInstance */
-			//UCustomGameInstance* GameInstace = Cast<UCustomGameInstance>(GetWorld()->GetGameInstance());
+			UCustomGameInstance* GameInstace = Cast<UCustomGameInstance>(GetWorld()->GetGameInstance());
 			/** 把id保存到GameInstance */
-		//	GameInstace->ContextMap.Add("id", Id);
+//			GameInstace->ContextMap.Add("id", Id);
 			/** 关卡的切换 */
-		//	UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Map/Map_Main"));
+			UGameplayStatics::OpenLevel(GetWorld(), TEXT("/Game/Map/Map_Main"));
 		}
 		else
 		{

@@ -8,7 +8,7 @@ public class InfinityBlade : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "UMG", "Json", "HTTP"});
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" , "UMG", "Json", "HTTP", "MoviePlayer" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
