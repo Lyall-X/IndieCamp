@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CustomGameInstance.h"
-#include <MoviePlayer.h>
+//#include <MoviePlayer.h>
 
 /** 初始化方法 */
 void UCustomGameInstance::Init()
@@ -20,8 +20,8 @@ void UCustomGameInstance::Init()
 void UCustomGameInstance::PreLoadMap(const FString& Map)
 {
 	/** 判断是否是加载的主关卡 */
-//	if (Map.Equals("/Game/Map/Map_Main"))
-//	{
+	if (Map.Equals("/Game/Map/Map_Main"))
+	{
 		/** 创建一个屏幕加载属性对象 */
 		FLoadingScreenAttributes LoadingAttr;
 		/** 手动的点击跳过加载 */
@@ -30,7 +30,7 @@ void UCustomGameInstance::PreLoadMap(const FString& Map)
 		LoadingAttr.WidgetLoadingScreen = LoadWidget->TakeWidget();
 		/** 设置加载屏幕 */
 		GetMoviePlayer()->SetupLoadingScreen(LoadingAttr);
-//	}
+	}
 }
 
 /** 地图加载结束的方法 */
