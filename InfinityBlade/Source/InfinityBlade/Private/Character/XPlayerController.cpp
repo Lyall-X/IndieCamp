@@ -8,6 +8,10 @@ void AXPlayerController::BeginPlay()
 {
 
 	XCharacter = Cast<AXCharacter>(GetPawn());
+	/** 初始化主界面UI */
+	MainWidget = CreateWidget<UMainUserWidget>(GetGameInstance(), LoadClass<UMainUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_MainUserWidget.BP_MainUserWidget_C'")));
+	/** 添加到视口 */
+	MainWidget->AddToViewport();
 }
 
 /** 绑定输入控件 */

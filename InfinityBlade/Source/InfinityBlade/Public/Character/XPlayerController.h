@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Character/XCharacter.h"
+#include "UI/MainUserWidget.h"
 #include "XPlayerController.generated.h"
 
 /**
@@ -20,6 +21,10 @@ public:
 	UPROPERTY()
 		AXCharacter * XCharacter;
 
+public:
+	/** 主界面UI */
+	UPROPERTY()
+		UMainUserWidget* MainWidget;
 
 public:
 	/** 游戏开始调用的方法 */
