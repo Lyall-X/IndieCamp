@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "Character/XCharacter.h"
 #include "UI/MainUserWidget.h"
+#include "Character/XAnimInstance.h"
 #include "XPlayerController.generated.h"
 
 /**
@@ -25,6 +26,10 @@ public:
 	/** 主界面UI */
 	UPROPERTY()
 		UMainUserWidget* MainWidget;
+public:
+	/** 武器对象 */
+	UPROPERTY()
+		AWeapon* XWeapon;
 
 public:
 	/** 游戏开始调用的方法 */
@@ -40,4 +45,10 @@ public:
 	/** 左右移动 */
 	UFUNCTION()
 		void MoveRight(float Speed);
+
+	/** 控件按钮事件初始化方法 */
+	void InitWidgetEvent();
+	/** 攻击按钮点击事件 */
+	UFUNCTION()
+		void AttackBtnOnClickedEvent();
 };

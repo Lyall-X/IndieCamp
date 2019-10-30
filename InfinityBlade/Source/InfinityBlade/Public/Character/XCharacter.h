@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Weapon/Weapon.h"
 #include "XCharacter.generated.h"
 
 /**
@@ -20,7 +21,9 @@ public:
 	/** 摄像机组件 */
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* CameraComponent;
-
+	/** 武器类 */
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+		TSubclassOf<AWeapon> XWeaponClass;
 public:
 	/** 构造方法 */
 	AXCharacter();

@@ -2,6 +2,8 @@
 
 
 #include "XPlayerController.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
 
 /** 游戏开始调用的方法 */
 void AXPlayerController::BeginPlay()
@@ -12,6 +14,23 @@ void AXPlayerController::BeginPlay()
 	MainWidget = CreateWidget<UMainUserWidget>(GetGameInstance(), LoadClass<UMainUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_MainUserWidget.BP_MainUserWidget_C'")));
 	/** 添加到视口 */
 	MainWidget->AddToViewport();
+
+	/** 判断武器类是否有效 */
+	if (XCharacter->XWeaponClass)
+	{
+		/** 生成一个武器对象 */
+		XWeapon = GetWorld()->SpawnActor<AWeapon>(XCharacter->XWeaponClass);
+		/** 绑定规则 */
+		FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
+		/** 绑定武器 */
+		XWeapon->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
+		/** 绑定武器重叠事件 */
+		//pon->CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AXPlayerController::WeaponOverlapDamage);
+	}
+
+
+	/** 初始化按钮点击事件 */
+	InitWidgetEvent();
 }
 
 /** 绑定输入控件 */
@@ -51,4 +70,20 @@ void AXPlayerController::MoveRight(float Speed)
 	FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 	/** 在该方向添加位移 */
 	XCharacter->AddMovementInput(Direction, Speed);
+}
+
+
+/** 控件按钮事件初始化方法 */
+void AXPlayerController::InitWidgetEvent()
+{
+	/** 攻击按钮点击事件绑定 */
+	if (MainWidget->Button_Attack)
+	{
+		MainWidget->Button_Attack->OnClicked.AddDynamic(this, &AXPlayerController::AttackBtnOnClickedEvent);
+	}
+}
+
+/** 攻击按钮点击事件 */
+void AXPlayerController::AttackBtnOnClickedEvent()
+{
 }
