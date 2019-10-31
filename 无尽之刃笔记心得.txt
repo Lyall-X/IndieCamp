@@ -9,6 +9,11 @@
 6.Actor作为UE4的底层对象Object，那么如何区分实物体与虚物体呢，Pawn则说明了玩家或 AI 实体在世界中的物理象征，
 继而从Pawn开始扩展为可移动的角色Pawn如Player Character以及控制输入类Pawn如Player Controller
 7.vs配置文档https://docs.unrealengine.com/en-US/Programming/Development/VisualStudioSetup/index.html?tdsourcetag=s_pctim_aiomsg
+8.android打包的时候需要配置 Project Settings -> Plataforms -> Android SDK ；然后找到下载工具的那个目录，才能打包
+
+1.创建人物：先创建人物character类，和人物控制类，然后基于人物类创建角色蓝图，然后创建基于人物蓝图的动作蓝图；
+在动作蓝图中，设置状态机，添加动画
+2.UE4的c++如何获取UMG中的控件
 
 参考大富翁地址 ： https://space.bilibili.com/19045234?spm_id_from=333.788.b_765f7570696e666f.1
 学习文档地址 ； 链接: https://pan.baidu.com/s/1zc2Am0IL4tzW4tTd9m8G_w 提取码: v7h6 复制这段内容后打开百度网盘手机App，操作更方便哦
