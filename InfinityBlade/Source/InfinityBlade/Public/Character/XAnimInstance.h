@@ -19,8 +19,45 @@ public:
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Speed;
 
+		/** 是否处于攻击状态 */
+		bool bIsAttacking;
+		/** 是否处于播放状态 */
+		bool bIsPlaying;
+		/** 是否进入第二次连击 */
+		bool bIsEnableSecondAttack;
+		/** 是否进入第三次连击 */
+		bool bIsEnableThreeAttack;
+		/** 是否进入第四次连击 */
+		bool bIsEnableFourAttack;
+		/** 是否进入第五次连击 */
+		bool bIsEnableFiveAttack;
+
 public:
 	/** 更新人物移动速度 */
 	UFUNCTION(BlueprintCallable)
 		void UpdateSpeed();
+
+public:
+	/** 开始播放蒙太奇 */
+	UFUNCTION()
+		void AnimNotify_PlayStart(UAnimNotify* Notify);
+	/** 结束播放蒙太奇 */
+	UFUNCTION()
+		void AnimNotify_PlayEnd(UAnimNotify* Notify);
+
+	/** 重置连击状态 */
+	UFUNCTION()
+		void AnimNotify_ResetSerialAttack(UAnimNotify* Notify);
+	/** 进入第二次连击 */
+	UFUNCTION()
+		void AnimNotify_SecondAttackInput(UAnimNotify* Notify);
+	/** 进入第三次连击 */
+	UFUNCTION()
+		void AnimNotify_ThreeAttackInput(UAnimNotify* Notify);
+	/** 进入第四次连击 */
+	UFUNCTION()
+		void AnimNotify_FourAttackInput(UAnimNotify* Notify);
+	/** 进入第五次连击 */
+	UFUNCTION()
+		void AnimNotify_FiveAttackInput(UAnimNotify* Notify);
 };

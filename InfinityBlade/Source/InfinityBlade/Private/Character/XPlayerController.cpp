@@ -8,8 +8,14 @@
 /** 游戏开始调用的方法 */
 void AXPlayerController::BeginPlay()
 {
-
+	/** 设置显示鼠标 */
+	bShowMouseCursor = true;
+	/** 初始化英雄角色对象*/
 	XCharacter = Cast<AXCharacter>(GetPawn());
+
+	/** 初始化英雄角色对象*/
+	XAnimInstance = Cast<UXAnimInstance>(XCharacter->GetMesh()->GetAnimInstance());
+
 	/** 初始化主界面UI */
 	MainWidget = CreateWidget<UMainUserWidget>(GetGameInstance(), LoadClass<UMainUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_MainUserWidget.BP_MainUserWidget_C'")));
 	/** 添加到视口 */
@@ -86,4 +92,39 @@ void AXPlayerController::InitWidgetEvent()
 /** 攻击按钮点击事件 */
 void AXPlayerController::AttackBtnOnClickedEvent()
 {
+	/** 判断当前蒙太奇是否正在播放,如果正在播放则终止 */
+	if (XAnimInstance->bIsPlaying)
+	{
+		return;
+	}
+	/** 获得连击动画蒙太奇 */
+	UAnimMontage* SerialAttakMontage = XCharacter->SerialAttackMontage;
+	/** 获得当前播放的节 */
+	FName CurrentSection = XAnimInstance->Montage_GetCurrentSection(SerialAttakMontage);
+	/** 判断 */
+	if (CurrentSection.IsNone())
+	{
+		/** 默认播放第一个节 */
+		XAnimInstance->Montage_Play(SerialAttakMontage);
+	}
+	else if (CurrentSection.IsEqual(FName("FirstSection")) && XAnimInstance->bIsEnableSecondAttack)
+	{
+		/** 播放第二个节 */
+		XAnimInstance->Montage_JumpToSection(FName("SecondSection"), SerialAttakMontage);
+	}
+	else if (CurrentSection.IsEqual(FName("SecondSection")) && XAnimInstance->bIsEnableThreeAttack)
+	{
+		/** 播放第三个节 */
+		XAnimInstance->Montage_JumpToSection(FName("ThreeSection"), SerialAttakMontage);
+	}
+	else if (CurrentSection.IsEqual(FName("ThreeSection")) && XAnimInstance->bIsEnableFourAttack)
+	{
+		/** 播放第四个节 */
+		XAnimInstance->Montage_JumpToSection(FName("FourSection"), SerialAttakMontage);
+	}
+	else if (CurrentSection.IsEqual(FName("FourSection")) && XAnimInstance->bIsEnableFiveAttack)
+	{
+		/** 播放第五个节 */
+		XAnimInstance->Montage_JumpToSection(FName("FiveSection"), SerialAttakMontage);
+	}
 }

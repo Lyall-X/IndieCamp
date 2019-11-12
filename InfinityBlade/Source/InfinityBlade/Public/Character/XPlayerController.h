@@ -22,6 +22,10 @@ public:
 	UPROPERTY()
 		AXCharacter * XCharacter;
 
+	/** 英雄角色动画实例 */
+	UPROPERTY()
+		UXAnimInstance* XAnimInstance;
+
 public:
 	/** 主界面UI */
 	UPROPERTY()
