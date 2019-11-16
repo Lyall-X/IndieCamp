@@ -18,6 +18,12 @@ class INFINITYBLADE_API UMainUserWidget : public UUserWidget
 	GENERATED_BODY()
 
 public:
+	/** HP */
+	UPROPERTY(Meta = (BindWidget))
+		UProgressBar* ProgressBar_HP;
+	/** MP */
+	UPROPERTY(Meta = (BindWidget))
+		UProgressBar* ProgressBar_MP;
 	/** ¹¥»÷°´Å¥ */
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_Attack;

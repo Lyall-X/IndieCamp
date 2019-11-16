@@ -24,6 +24,8 @@ void AXPlayerController::BeginPlay()
 	MainWidget = CreateWidget<UMainUserWidget>(GetGameInstance(), LoadClass<UMainUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_MainUserWidget.BP_MainUserWidget_C'")));
 	/** 添加到视口 */
 	MainWidget->AddToViewport();
+	/** 初始化UI */
+	UpdateUI();//一定要放在添加视口之后，不然汇报错
 
 	/** 判断武器类是否有效 */
 	if (XCharacter->XWeaponClass)
@@ -143,4 +145,19 @@ void AXPlayerController::InitState()
 	XPlayerState->SetCurrentMP(XCharacter->TotalMP);
 	/** 设置一下普攻基本伤害 */
 	XPlayerState->SetAttackDamage(XCharacter->NoramlAttack);
+}
+
+/** 初始化UI */
+void AXPlayerController::UpdateUI()
+{
+	/** 设置HP */
+	if (MainWidget->ProgressBar_HP)
+	{
+		MainWidget->ProgressBar_HP->SetPercent(1.0 - (XPlayerState->GetCurrentHP() / XCharacter->TotalHP));
+	}
+	/** 设置MP */
+	if (MainWidget->ProgressBar_MP)
+	{
+		MainWidget->ProgressBar_MP->SetPercent(1.0 - (XPlayerState->GetCurrentMP() / XCharacter->TotalMP));
+	}
 }

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Character/XPlayerState.h"
 #include "XAnimInstance.generated.h"
 
 /**
@@ -15,22 +16,28 @@ class INFINITYBLADE_API UXAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 
 public:
-		/** 人物的移动速度 */
-		UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-		float Speed;
+	/** 角色状态 */
+	UPROPERTY()
+		AXPlayerState* XPlayerState;
+	/** 角色的基本攻击 */
+	float NormalAttack;
 
-		/** 是否处于攻击状态 */
-		bool bIsAttacking;
-		/** 是否处于播放状态 */
-		bool bIsPlaying;
-		/** 是否进入第二次连击 */
-		bool bIsEnableSecondAttack;
-		/** 是否进入第三次连击 */
-		bool bIsEnableThreeAttack;
-		/** 是否进入第四次连击 */
-		bool bIsEnableFourAttack;
-		/** 是否进入第五次连击 */
-		bool bIsEnableFiveAttack;
+	/** 人物的移动速度 */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
+	float Speed;
+
+	/** 是否处于攻击状态 */
+	bool bIsAttacking;
+	/** 是否处于播放状态 */
+	bool bIsPlaying;
+	/** 是否进入第二次连击 */
+	bool bIsEnableSecondAttack;
+	/** 是否进入第三次连击 */
+	bool bIsEnableThreeAttack;
+	/** 是否进入第四次连击 */
+	bool bIsEnableFourAttack;
+	/** 是否进入第五次连击 */
+	bool bIsEnableFiveAttack;
 
 public:
 	/** 更新人物移动速度 */
@@ -60,4 +67,16 @@ public:
 	/** 进入第五次连击 */
 	UFUNCTION()
 		void AnimNotify_FiveAttackInput(UAnimNotify* Notify);
+
+
+	/** 初始化玩家状态 */
+	void InitState();
+	/** 重置为普通攻击 */
+	void ResetNormalAttack();
+	/** 连招加成伤害 */
+	void UpdateSerialAttack();
+	/** 扣除魔法值 */
+	void MinusMP(float MP);
+	/** 更新MP的UI */
+	void UpdateMPUI();
 };

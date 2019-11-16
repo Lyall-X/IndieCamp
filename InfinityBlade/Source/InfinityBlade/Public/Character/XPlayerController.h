@@ -56,6 +56,9 @@ public:
 	/** 初始化玩家状态 */
 	void InitState();
 
+	/** 初始化UI */
+	void UpdateUI();
+
 	/** 控件按钮事件初始化方法 */
 	void InitWidgetEvent();
 	/** 攻击按钮点击事件 */

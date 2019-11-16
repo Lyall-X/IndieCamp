@@ -2,6 +2,7 @@
 
 
 #include "XAnimInstance.h"
+#include "Character/XPlayerController.h"
 
 
 /** 更新人物移动速度 */
@@ -32,28 +33,93 @@ void UXAnimInstance::AnimNotify_ResetSerialAttack(UAnimNotify* Notify)
 	bIsEnableThreeAttack = false;
 	bIsEnableFourAttack = false;
 	bIsEnableFiveAttack = false;
+	/** 重置连击伤害 */
+	ResetNormalAttack();
 }
 
 /** 进入第二次连击 */
 void UXAnimInstance::AnimNotify_SecondAttackInput(UAnimNotify* Notify)
 {
 	bIsEnableSecondAttack = true;
+	/** 加成伤害伤害 */
+	UpdateSerialAttack();
 }
 
 /** 进入第三次连击 */
 void UXAnimInstance::AnimNotify_ThreeAttackInput(UAnimNotify* Notify)
 {
 	bIsEnableThreeAttack = true;
+	/** 加成伤害伤害 */
+	UpdateSerialAttack();
 }
 
 /** 进入第四次连击 */
 void UXAnimInstance::AnimNotify_FourAttackInput(UAnimNotify* Notify)
 {
 	bIsEnableFourAttack = true;
+	/** 加成伤害伤害 */
+	UpdateSerialAttack();
 }
 
 /** 进入第五次连击 */
 void UXAnimInstance::AnimNotify_FiveAttackInput(UAnimNotify* Notify)
 {
 	bIsEnableFiveAttack = true;
+	/** 加成伤害伤害 */
+	UpdateSerialAttack();
+}
+
+
+/** 初始化玩家状态 */
+void UXAnimInstance::InitState()
+{
+	if (XPlayerState == nullptr)
+	{
+		/** 获取Controller */
+		AXPlayerController* XPlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
+		/** 获取状态 */
+		XPlayerState = XPlayerController->XPlayerState;
+		/** 初始化基本攻击 */
+		NormalAttack = XPlayerState->GetAttackDamage();
+	}
+}
+
+/** 重置为普通攻击 */
+void UXAnimInstance::ResetNormalAttack()
+{
+	/** 初始化 */
+	InitState();
+	/** 重置普攻的伤害 */
+	XPlayerState->SetAttackDamage(NormalAttack);
+}
+
+/** 连招加成伤害 */
+void UXAnimInstance::UpdateSerialAttack()
+{
+	/** 初始化 */
+	InitState();
+	/** 加成伤害 */
+	XPlayerState->SetAttackDamage(XPlayerState->GetAttackDamage() + 10.f);
+}
+
+/** 扣除魔法值 */
+void UXAnimInstance::MinusMP(float MP)
+{
+	/** 初始化 */
+	InitState();
+	/** 扣除魔法值 */
+	XPlayerState->SetCurrentMP(XPlayerState->GetCurrentMP() - MP);
+	/** 通知UI */
+	UpdateMPUI();
+}
+
+/** 更新MP的UI */
+void UXAnimInstance::UpdateMPUI()
+{
+	/** 获取Controller */
+	AXPlayerController* XPlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
+	/** 获取角色 */
+	AXCharacter* XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
+	/** 设置MP的UI */
+	XPlayerController->MainWidget->ProgressBar_MP->SetPercent(1.f - (XPlayerState->GetCurrentMP() / XCharacter->TotalMP));
 }
