@@ -57,7 +57,9 @@ public:
 	void InitState();
 
 	/** 初始化UI */
-	void UpdateUI();
+	void UpdateUI();/** 武器伤害方法 */
+	UFUNCTION()
+		void WeaponOverlapDamage(UPrimitiveComponent* OverlapedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 BodyIndex, bool FromSweep, const FHitResult& HitResult);
 
 	/** 控件按钮事件初始化方法 */
 	void InitWidgetEvent();

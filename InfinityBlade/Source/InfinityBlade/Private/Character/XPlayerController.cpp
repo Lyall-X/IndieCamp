@@ -37,7 +37,7 @@ void AXPlayerController::BeginPlay()
 		/** °ó¶¨ÎäÆ÷ */
 		XWeapon->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
 		/** °ó¶¨ÎäÆ÷ÖØµþÊÂ¼þ */
-		//pon->CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AXPlayerController::WeaponOverlapDamage);
+		XWeapon->CapsuleComponent->OnComponentBeginOverlap.AddDynamic(this, &AXPlayerController::WeaponOverlapDamage);
 	}
 
 
@@ -159,5 +159,16 @@ void AXPlayerController::UpdateUI()
 	if (MainWidget->ProgressBar_MP)
 	{
 		MainWidget->ProgressBar_MP->SetPercent(1.0 - (XPlayerState->GetCurrentMP() / XCharacter->TotalMP));
+	}
+}
+
+/** ÎäÆ÷ÉËº¦·½·¨ */
+void AXPlayerController::WeaponOverlapDamage(UPrimitiveComponent* OverlapedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 BodyIndex, bool FromSweep, const FHitResult& HitResult)
+{
+	/** ÅÐ¶ÏÎäÆ÷ÊÇ·ñ´¦ÓÚ¹¥»÷×´Ì¬ */
+	if (XAnimInstance->bIsAttacking)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Overlap...");
+		UGameplayStatics::ApplyDamage(OtherActor, XPlayerState->GetAttackDamage(), this, XCharacter, nullptr);
 	}
 }

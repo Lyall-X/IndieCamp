@@ -26,6 +26,18 @@ void UXAnimInstance::AnimNotify_PlayEnd(UAnimNotify* Notify)
 	bIsPlaying = false;
 }
 
+/** ¿ªÊ¼¹¥»÷ÃÉÌ«Ææ */
+void UXAnimInstance::AnimNotify_AttackStart(UAnimNotify* Notify)
+{
+	bIsAttacking = true;
+}
+
+/** ½áÊø¹¥»÷ÃÉÌ«Ææ */
+void UXAnimInstance::AnimNotify_AttackEnd(UAnimNotify* Notify)
+{
+	bIsAttacking = false;
+}
+
 /** ÖØÖÃÁ¬»÷×´Ì¬ */
 void UXAnimInstance::AnimNotify_ResetSerialAttack(UAnimNotify* Notify)
 {

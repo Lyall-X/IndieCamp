@@ -51,6 +51,12 @@ public:
 	/** 结束播放蒙太奇 */
 	UFUNCTION()
 		void AnimNotify_PlayEnd(UAnimNotify* Notify);
+	/** 开始攻击蒙太奇 */
+	UFUNCTION()
+		void AnimNotify_AttackStart(UAnimNotify* Notify);
+	/** 结束攻击蒙太奇 */
+	UFUNCTION()
+		void AnimNotify_AttackEnd(UAnimNotify* Notify);
 
 	/** 重置连击状态 */
 	UFUNCTION()
