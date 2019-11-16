@@ -5,6 +5,7 @@
 #include "Runtime/CoreUObject/Public/UObject/ConstructorHelpers.h"
 #include "GameFramework/Character.h"
 #include "Character/XPlayerController.h"
+#include "Character/XPlayerState.h"
 
 /** 构造方法 */
 AMainGameMode::AMainGameMode()
@@ -14,4 +15,6 @@ AMainGameMode::AMainGameMode()
 	DefaultPawnClass = CharacterFinder.Class;
 	/** 设置PlayerController */
 	PlayerControllerClass = AXPlayerController::StaticClass();
+	/** 设置PlayerState */
+	PlayerStateClass = AXPlayerState::StaticClass();
 };

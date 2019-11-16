@@ -10,11 +10,15 @@ void AXPlayerController::BeginPlay()
 {
 	/** 设置显示鼠标 */
 	bShowMouseCursor = true;
-	/** 初始化英雄角色对象*/
-	XCharacter = Cast<AXCharacter>(GetPawn());
 
 	/** 初始化英雄角色对象*/
+	XCharacter = Cast<AXCharacter>(GetPawn());
+	/** 初始化英雄角色对象*/
 	XAnimInstance = Cast<UXAnimInstance>(XCharacter->GetMesh()->GetAnimInstance());
+	/** 初始化玩家状态 */
+	XPlayerState = Cast<AXPlayerState>(this->PlayerState);
+	/** 初始化玩家状态数值 */
+	InitState();
 
 	/** 初始化主界面UI */
 	MainWidget = CreateWidget<UMainUserWidget>(GetGameInstance(), LoadClass<UMainUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_MainUserWidget.BP_MainUserWidget_C'")));
@@ -127,4 +131,16 @@ void AXPlayerController::AttackBtnOnClickedEvent()
 		/** 播放第五个节 */
 		XAnimInstance->Montage_JumpToSection(FName("FiveSection"), SerialAttakMontage);
 	}
+}
+
+
+/** 初始化玩家状态 */
+void AXPlayerController::InitState()
+{
+	/** 设置一下当前的HP */
+	XPlayerState->SetCurrentHP(XCharacter->TotalHP);
+	/** 设置一下当前的MP */
+	XPlayerState->SetCurrentMP(XCharacter->TotalMP);
+	/** 设置一下普攻基本伤害 */
+	XPlayerState->SetAttackDamage(XCharacter->NoramlAttack);
 }

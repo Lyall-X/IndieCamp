@@ -7,6 +7,7 @@
 #include "Character/XCharacter.h"
 #include "UI/MainUserWidget.h"
 #include "Character/XAnimInstance.h"
+#include "Character/XPlayerState.h"
 #include "XPlayerController.generated.h"
 
 /**
@@ -21,7 +22,9 @@ public:
 	/** 英雄角色对象 */
 	UPROPERTY()
 		AXCharacter * XCharacter;
-
+	/** 玩家状态 */
+	UPROPERTY()
+		AXPlayerState* XPlayerState;
 	/** 英雄角色动画实例 */
 	UPROPERTY()
 		UXAnimInstance* XAnimInstance;
@@ -49,6 +52,9 @@ public:
 	/** 左右移动 */
 	UFUNCTION()
 		void MoveRight(float Speed);
+public:
+	/** 初始化玩家状态 */
+	void InitState();
 
 	/** 控件按钮事件初始化方法 */
 	void InitWidgetEvent();
