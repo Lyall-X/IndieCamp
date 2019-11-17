@@ -47,6 +47,9 @@ public:
 	/** 寒冰之石蒙太奇 */
 	UPROPERTY(EditAnywhere, Category = "Montage")
 		UAnimMontage* IceStoneMontage;
+	/** 恢复之术蒙太奇 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		UAnimMontage* CureMontage;
 public:
 	/** 构造方法 */
 	AXCharacter();

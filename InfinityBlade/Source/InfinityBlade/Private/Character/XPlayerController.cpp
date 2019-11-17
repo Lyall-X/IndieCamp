@@ -100,6 +100,11 @@ void AXPlayerController::InitWidgetEvent()
 	{
 		MainWidget->Button_IceStone->OnClicked.AddDynamic(this, &AXPlayerController::IceStoneBtnOnClickedEvent);
 	}
+	/** 恢复之术按钮点击事件绑定 */
+	if (MainWidget->Button_Cure)
+	{
+		MainWidget->Button_Cure->OnClicked.AddDynamic(this, &AXPlayerController::CureBtnOnClickedEvent);
+	}
 }
 
 /** 攻击按钮点击事件 */
@@ -246,4 +251,37 @@ void AXPlayerController::IceStoneBtnOnClickedEvent()
 		///** 设置当前冷却时间 */
 		//IceStoneCurrentCD = IceStoneTotalCD;
 	}
+}
+
+
+/** 恢复之术技能点击事件 */
+void AXPlayerController::CureBtnOnClickedEvent()
+{
+	/** 判断恢复之术蒙太奇是否正在播放 */
+	if (XAnimInstance->bIsPlaying)
+	{
+		return;
+	}
+	/** 判断当前魔法值是否足够 */
+	if (XPlayerState->GetCurrentMP() >= 10.f)
+	{
+		//if (XPlayerState->GetCurrentHP() < XCharacter->TotalHP)
+		//{
+			XAnimInstance->Montage_Play(XCharacter->CureMontage, 1.f);
+	//	}
+		//else
+		//{
+		//	MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
+		//	MainWidget->MsgText->SetText(FText::FromString("HP Is MaxValue"));
+		//	MsgCurrentCD = MsgTotalCD;
+		//	XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
+		//}
+	}
+	//else
+	//{
+	//	MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
+	//	MainWidget->MsgText->SetText(FText::FromString("MP Is Not Enough"));
+	//	MsgCurrentCD = MsgTotalCD;
+	//	XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
+	//}
 }

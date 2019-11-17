@@ -90,4 +90,7 @@ public:
 	/** 寒冰之石产生通知 */
 	UFUNCTION()
 		void AnimNotify_SpawnIceStone(UAnimNotify* Notify);
+	/** 恢复之术产生通知 */
+	UFUNCTION()
+		void AnimNotify_UseCure(UAnimNotify* Notify);
 };

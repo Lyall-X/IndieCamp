@@ -154,3 +154,25 @@ void UXAnimInstance::AnimNotify_SpawnIceStone(UAnimNotify* Notify)
 	/** 扣除魔法值 */
 	MinusMP(10.f);
 }
+
+/** 恢复之术产生通知 */
+void UXAnimInstance::AnimNotify_UseCure(UAnimNotify* Notify)
+{
+	/** 获取英雄角色 */
+	AXCharacter* XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
+	/** 初始化状态 */
+	InitState();
+	/** 设置当前的HP */
+	XPlayerState->SetCurrentHP(XPlayerState->GetCurrentHP() + 30.f);
+	/** 判断HP是否溢出 */
+	if (XPlayerState->GetCurrentHP() > XCharacter->TotalHP)
+	{
+		XPlayerState->SetCurrentHP(XCharacter->TotalHP);
+	}
+	/** 获取Controller */
+	AXPlayerController* XPlayerController = Cast<AXPlayerController>(TryGetPawnOwner()->GetController());
+	/** 更新HP的UI */
+	XPlayerController->MainWidget->ProgressBar_HP->SetPercent(1.f - (XPlayerState->GetCurrentHP() / XCharacter->TotalHP));
+	/** 扣除魔法值 */
+	MinusMP(10.f);
+}

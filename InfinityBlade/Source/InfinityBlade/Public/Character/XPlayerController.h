@@ -76,4 +76,8 @@ public:
 	/** 寒冰之石技能点击事件 */
 	UFUNCTION()
 		void IceStoneBtnOnClickedEvent();
+
+	/** 恢复之术技能点击事件 */
+	UFUNCTION()
+		void CureBtnOnClickedEvent();
 };

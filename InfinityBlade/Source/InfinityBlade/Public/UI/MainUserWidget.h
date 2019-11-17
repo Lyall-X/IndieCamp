@@ -32,4 +32,8 @@ public:
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_IceStone;
 
+	/** 恢复之术技能按钮 */
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_Cure;
+
 };
