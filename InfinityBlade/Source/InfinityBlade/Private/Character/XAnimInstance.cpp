@@ -3,6 +3,8 @@
 
 #include "XAnimInstance.h"
 #include "Character/XPlayerController.h"
+#include "Character/XCharacter.h"
+#include "Character/Skill/IceStone.h"
 
 
 /** 更新人物移动速度 */
@@ -134,4 +136,21 @@ void UXAnimInstance::UpdateMPUI()
 	AXCharacter* XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
 	/** 设置MP的UI */
 	XPlayerController->MainWidget->ProgressBar_MP->SetPercent(1.f - (XPlayerState->GetCurrentMP() / XCharacter->TotalMP));
+}
+
+/** 寒冰之石产生通知 */
+void UXAnimInstance::AnimNotify_SpawnIceStone(UAnimNotify* Notify)
+{
+	/** 获取英雄角色 */
+	AXCharacter* XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
+	/** 获取Socket位置 */
+	FVector Location = XCharacter->GetMesh()->GetSocketLocation(TEXT("IceStone"));
+	/** 获取Socket的旋转 */
+	FRotator Rotation = XCharacter->GetMesh()->GetSocketRotation(TEXT("IceStone"));
+	/** 产生寒冰之石 */
+	AIceStone* IceStone = GetWorld()->SpawnActor<AIceStone>(XCharacter->IceStoneClass, Location, Rotation);
+	/** 射出寒冰之石 */
+	IceStone->Shoot(Rotation.Vector());
+	/** 扣除魔法值 */
+	MinusMP(10.f);
 }

@@ -4,6 +4,8 @@
 #include "XPlayerController.h"
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
+#include "Character/Skill/IceStone.h"
+#include "AI/AICharacter.h"
 
 /** 游戏开始调用的方法 */
 void AXPlayerController::BeginPlay()
@@ -93,6 +95,11 @@ void AXPlayerController::InitWidgetEvent()
 	{
 		MainWidget->Button_Attack->OnClicked.AddDynamic(this, &AXPlayerController::AttackBtnOnClickedEvent);
 	}
+	/** 寒冰之石按钮点击事件绑定 */
+	if (MainWidget->Button_IceStone)
+	{
+		MainWidget->Button_IceStone->OnClicked.AddDynamic(this, &AXPlayerController::IceStoneBtnOnClickedEvent);
+	}
 }
 
 /** 攻击按钮点击事件 */
@@ -106,7 +113,9 @@ void AXPlayerController::AttackBtnOnClickedEvent()
 	/** 获得连击动画蒙太奇 */
 	UAnimMontage* SerialAttakMontage = XCharacter->SerialAttackMontage;
 	/** 获得当前播放的节 */
-	FName CurrentSection = XAnimInstance->Montage_GetCurrentSection(SerialAttakMontage);
+	FName CurrentSection = XAnimInstance->Montage_GetCurrentSection(SerialAttakMontage);	
+	/** 锁定敌人 */
+	LockAI();
 	/** 判断 */
 	if (CurrentSection.IsNone())
 	{
@@ -170,5 +179,71 @@ void AXPlayerController::WeaponOverlapDamage(UPrimitiveComponent* OverlapedCompo
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Overlap...");
 		UGameplayStatics::ApplyDamage(OtherActor, XPlayerState->GetAttackDamage(), this, XCharacter, nullptr);
+	}
+}
+
+/** 锁定敌人方法 */
+void AXPlayerController::LockAI()
+{
+	/** 获取自己的位置 */
+	FVector Location = XCharacter->GetActorLocation();
+	/** 获取所有的敌人列表 */
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AAICharacter::StaticClass(), AiArray);
+	/** 判断敌人数量 */
+	int AiNum = AiArray.Num();
+	if (AiNum > 0)
+	{
+		/** 获取默认最近距离 */
+		float MinDistance = FVector::Dist(Location, AiArray[0]->GetActorLocation());
+		/** 距离玩家最近的AI */
+		AActor* MinActor = AiArray[0];
+		/** 遍历所有敌人 */
+		for (int i = 0; i < AiNum; i++)
+		{
+			/** 判断敌人是否已经死亡 */
+			if (Cast<AAICharacter>(AiArray[i])->bIsDead)
+			{
+				continue;
+			}
+			/** 获取距离 */
+			float TmpDistance = FVector::Dist(Location, AiArray[i]->GetActorLocation());
+			/** 判断最近距离 */
+			if (MinDistance >= TmpDistance)
+			{
+				MinDistance = TmpDistance;
+				MinActor = AiArray[i];
+			}
+		}
+		/** 判断距离是否距离玩家足够的近 */
+		if (MinDistance <= 400)
+		{
+			/** 设置Rotation只左右旋转 */
+			FRotator Rotation = UKismetMathLibrary::FindLookAtRotation(Location, MinActor->GetActorLocation());
+			/** 修改Rotation */
+			Rotation.Pitch = XCharacter->GetCapsuleComponent()->GetComponentRotation().Pitch;
+			Rotation.Roll = XCharacter->GetCapsuleComponent()->GetComponentRotation().Roll;
+			/** 设置玩家胶囊体朝向 */
+			XCharacter->GetCapsuleComponent()->SetRelativeRotation(Rotation);
+		}
+	}
+}
+
+/** 寒冰之石技能点击事件 */
+void AXPlayerController::IceStoneBtnOnClickedEvent()
+{
+	/** 判断寒冰之石蒙太奇是否正在播放 */
+	if (XAnimInstance->bIsPlaying)
+	{
+		return;
+	}
+	/** 判断当前魔法值是否足够 */
+	if (XPlayerState->GetCurrentMP() >= 10.f)
+	{
+		LockAI();
+		XAnimInstance->Montage_Play(XCharacter->IceStoneMontage, 1.f);
+		/** 开始其定时器 */
+		//XCharacter->GetWorldTimerManager().SetTimer(IceStoneTimer, this, &AXPlayerController::IceStoneCallback, 1.f, true);
+		///** 设置当前冷却时间 */
+		//IceStoneCurrentCD = IceStoneTotalCD;
 	}
 }

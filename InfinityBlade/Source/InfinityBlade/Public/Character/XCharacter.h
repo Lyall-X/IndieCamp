@@ -8,6 +8,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Weapon/Weapon.h"
 #include "Animation/AnimMontage.h"
+#include "Character/Skill/IceStone.h"
 #include "XCharacter.generated.h"
 
 /**
@@ -39,6 +40,13 @@ public:
 	/** 连击动画蒙太奇 */
 	UPROPERTY(EditAnywhere, Category = "Montage")
 		UAnimMontage* SerialAttackMontage;
+
+	/** 寒冰之石类型 */
+	UPROPERTY(EditAnywhere, Category = "Skill")
+		TSubclassOf<AIceStone> IceStoneClass;
+	/** 寒冰之石蒙太奇 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		UAnimMontage* IceStoneMontage;
 public:
 	/** 构造方法 */
 	AXCharacter();

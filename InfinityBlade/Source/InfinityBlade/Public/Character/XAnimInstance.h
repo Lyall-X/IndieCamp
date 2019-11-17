@@ -85,4 +85,9 @@ public:
 	void MinusMP(float MP);
 	/** 更新MP的UI */
 	void UpdateMPUI();
+
+
+	/** 寒冰之石产生通知 */
+	UFUNCTION()
+		void AnimNotify_SpawnIceStone(UAnimNotify* Notify);
 };

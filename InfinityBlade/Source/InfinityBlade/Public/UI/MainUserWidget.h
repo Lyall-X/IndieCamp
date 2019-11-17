@@ -28,4 +28,8 @@ public:
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_Attack;
 
+	/** 寒冰之石技能按钮 */
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_IceStone;
+
 };

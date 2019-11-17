@@ -28,6 +28,9 @@ public:
 	/** 英雄角色动画实例 */
 	UPROPERTY()
 		UXAnimInstance* XAnimInstance;
+	/** AI数组 */
+	UPROPERTY()
+		TArray<AActor*> AiArray;
 
 public:
 	/** 主界面UI */
@@ -60,10 +63,17 @@ public:
 	void UpdateUI();/** 武器伤害方法 */
 	UFUNCTION()
 		void WeaponOverlapDamage(UPrimitiveComponent* OverlapedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 BodyIndex, bool FromSweep, const FHitResult& HitResult);
+	/** 锁定敌人方法 */
+	void LockAI();
 
 	/** 控件按钮事件初始化方法 */
 	void InitWidgetEvent();
 	/** 攻击按钮点击事件 */
 	UFUNCTION()
 		void AttackBtnOnClickedEvent();
+
+
+	/** 寒冰之石技能点击事件 */
+	UFUNCTION()
+		void IceStoneBtnOnClickedEvent();
 };
