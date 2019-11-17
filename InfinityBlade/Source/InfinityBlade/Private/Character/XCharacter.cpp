@@ -18,6 +18,7 @@ AXCharacter::AXCharacter()
 	CameraComponent->SetupAttachment(RootComponent);
 	/** 相机角色控制器控制朝向 */
 	CameraComponent->bUsePawnControlRotation = false;
+	CameraComponent->SetAbsolute(false, true, false);
 }
 
 /** 游戏开始调用的方法 */
