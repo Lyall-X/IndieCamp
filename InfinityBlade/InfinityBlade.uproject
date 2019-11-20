@@ -11,7 +11,8 @@
 			"AdditionalDependencies": [
 				"UMG",
 				"AugmentedReality",
-				"Engine"
+				"Engine",
+				"AIModule"
 			]
 		}
 	]

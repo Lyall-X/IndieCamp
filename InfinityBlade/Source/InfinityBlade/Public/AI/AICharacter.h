@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "Components/WidgetComponent.h"
 #include "Components/ProgressBar.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "Weapon/Weapon.h"
 #include "AICharacter.generated.h"
 
 /**
@@ -29,6 +31,9 @@ public:
 	/** 血条Widget */
 	UPROPERTY()
 		UProgressBar* HPBar;
+	/** 行为树对象 */
+	UPROPERTY(EditAnywhere, Category = "AI")
+		UBehaviorTree* BehaviorTree;
 
 public:
 	/** 构造方法 */
