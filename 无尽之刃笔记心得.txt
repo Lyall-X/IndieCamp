@@ -28,3 +28,5 @@ Hit事件粒子特效,胶囊体无法做到，需要网格模型才可以
 Possess 改成 OnPossess才能重写
 
 在character里 mash对象上指定动画蓝图，从而才会动
+
+check cone改为 keep in cone持续跟踪
