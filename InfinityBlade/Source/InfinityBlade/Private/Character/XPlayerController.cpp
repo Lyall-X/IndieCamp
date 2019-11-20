@@ -298,25 +298,25 @@ void AXPlayerController::CureBtnOnClickedEvent()
 	/** 判断当前魔法值是否足够 */
 	if (XPlayerState->GetCurrentMP() >= 10.f)
 	{
-		//if (XPlayerState->GetCurrentHP() < XCharacter->TotalHP)
-		//{
+		if (XPlayerState->GetCurrentHP() < XCharacter->TotalHP)
+		{
 			XAnimInstance->Montage_Play(XCharacter->CureMontage, 1.f);
-	//	}
-		//else
-		//{
-		//	MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
-		//	MainWidget->MsgText->SetText(FText::FromString("HP Is MaxValue"));
-		//	MsgCurrentCD = MsgTotalCD;
-		//	XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
-		//}
+		}
+		else
+		{
+			MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
+			MainWidget->MsgText->SetText(FText::FromString("HP Is MaxValue"));
+			MsgCurrentCD = MsgTotalCD;
+			XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
+		}
 	}
-	//else
-	//{
-	//	MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
-	//	MainWidget->MsgText->SetText(FText::FromString("MP Is Not Enough"));
-	//	MsgCurrentCD = MsgTotalCD;
-	//	XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
-	//}
+	else
+	{
+		MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
+		MainWidget->MsgText->SetText(FText::FromString("MP Is Not Enough"));
+		MsgCurrentCD = MsgTotalCD;
+		XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
+	}
 }
 
 /** 雷霆之光技能点击事件 */
@@ -347,5 +347,20 @@ void AXPlayerController::XBladeBtnOnClickedEvent()
 	if (XPlayerState->GetCurrentMP() >= 50.f)
 	{
 		XAnimInstance->Montage_Play(XCharacter->XBladeMontage, 1.f);
+	}
+}
+
+/** 消息提示定时器回调方法 */
+void AXPlayerController::MsgTimerCallback()
+{
+	if (MsgCurrentCD == 0.f)
+	{
+		MainWidget->MsgText->SetVisibility(ESlateVisibility::Hidden);
+		XCharacter->GetWorldTimerManager().ClearTimer(MsgTimer);
+	}
+	else
+	{
+		MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
+		MsgCurrentCD--;
 	}
 }

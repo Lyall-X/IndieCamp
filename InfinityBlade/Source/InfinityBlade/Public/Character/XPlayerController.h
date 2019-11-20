@@ -48,6 +48,12 @@ public:
 	virtual void SetupInputComponent() override;
 
 public:
+	/** 提示信息定时器 */
+	FTimerHandle MsgTimer;
+	/** 总共冷却时间 */
+	float MsgTotalCD;
+	/** 当前冷却时间 */
+	float MsgCurrentCD;
 	/** 寒冰之石定时器 */
 	FTimerHandle IceStoneTimer;
 	/** 总共冷却时间 */
@@ -96,4 +102,8 @@ public:
 	/** 无尽之刃技能点击事件 */
 	UFUNCTION()
 		void XBladeBtnOnClickedEvent();
+
+
+	/** 消息提示定时器回调方法 */
+	void MsgTimerCallback();
 };

@@ -50,4 +50,8 @@ public:
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_XBlade;
 
+	/** 提示文本 */
+	UPROPERTY(Meta = (BindWidget))
+		UTextBlock* MsgText;
+
 };
