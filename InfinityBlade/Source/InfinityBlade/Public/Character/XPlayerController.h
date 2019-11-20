@@ -47,6 +47,13 @@ public:
 	/** 绑定输入控件 */
 	virtual void SetupInputComponent() override;
 
+public:
+	/** 寒冰之石定时器 */
+	FTimerHandle IceStoneTimer;
+	/** 总共冷却时间 */
+	float IceStoneTotalCD;
+	/** 当前冷却时间 */
+	float IceStoneCurrentCD;
 
 public:
 	/** 前后移动 */
@@ -76,6 +83,8 @@ public:
 	/** 寒冰之石技能点击事件 */
 	UFUNCTION()
 		void IceStoneBtnOnClickedEvent();
+	/** 寒冰之石定时器回调方法 */
+	void IceStoneCallback();
 
 	/** 恢复之术技能点击事件 */
 	UFUNCTION()

@@ -31,6 +31,12 @@ public:
 	/** 寒冰之石技能按钮 */
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_IceStone;
+	/** 寒冰之石技能冷却进度条 */
+	UPROPERTY(Meta = (BindWidget))
+		UProgressBar* IceStoneCDBar;
+	/** 寒冰之石技能冷却时间提示 */
+	UPROPERTY(Meta = (BindWidget))
+		UTextBlock* IceStoneCDText;
 
 	/** 恢复之术技能按钮 */
 	UPROPERTY(Meta = (BindWidget))

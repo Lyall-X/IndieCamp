@@ -39,6 +39,11 @@ public:
 	bool bIsEnableFourAttack;
 	/** 是否进入第五次连击 */
 	bool bIsEnableFiveAttack;
+	/** 是否释放无尽之刃技能 */
+	bool bIsXBlade;
+	/** 无尽之刃定时器 */
+	UPROPERTY()
+		FTimerHandle TimerHandle;
 
 public:
 	/** 更新人物移动速度 */
@@ -100,4 +105,7 @@ public:
 	/** 无尽之刃产生通知 */
 	UFUNCTION()
 		void AnimNotify_SpawnXBlade(UAnimNotify* Notify);
+
+	/** 定时器回调方法 */
+	void TimerCallback();
 };

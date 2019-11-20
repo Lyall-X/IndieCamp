@@ -103,9 +103,12 @@ void UXAnimInstance::InitState()
 void UXAnimInstance::ResetNormalAttack()
 {
 	/** 初始化 */
-	InitState();
+	InitState();	
 	/** 重置普攻的伤害 */
-	XPlayerState->SetAttackDamage(NormalAttack);
+	if (!bIsXBlade)
+	{
+		XPlayerState->SetAttackDamage(NormalAttack);
+	}
 }
 
 /** 连招加成伤害 */
@@ -114,7 +117,10 @@ void UXAnimInstance::UpdateSerialAttack()
 	/** 初始化 */
 	InitState();
 	/** 加成伤害 */
-	XPlayerState->SetAttackDamage(XPlayerState->GetAttackDamage() + 10.f);
+	if (!bIsXBlade)
+	{
+		XPlayerState->SetAttackDamage(XPlayerState->GetAttackDamage() + 10.f);
+	}
 }
 
 /** 扣除魔法值 */
@@ -209,8 +215,20 @@ void UXAnimInstance::AnimNotify_SpawnXBlade(UAnimNotify* Notify)
 	InitState();
 	/** 加成伤害 */
 	XPlayerState->SetAttackDamage(XPlayerState->GetAttackDamage() + 100.f);
-	///** 设置为无尽之刃状态 */
-	//bIsXBlade = true;
-	///** 开启定时器 */
-	//XCharacter->GetWorldTimerManager().SetTimer(TimerHandle, this, &UXAnimInstance::TimerCallback, 10.f, false);
+	/** 设置为无尽之刃状态 */
+	bIsXBlade = true;
+	/** 开启定时器 */
+	XCharacter->GetWorldTimerManager().SetTimer(TimerHandle, this, &UXAnimInstance::TimerCallback, 10.f, false);
+}
+
+/** 定时器回调方法 */
+void UXAnimInstance::TimerCallback()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Timer...");
+	/** 设置为无尽之刃状态 */
+	bIsXBlade = false;
+	/** 获取英雄角色 */
+	AXCharacter* XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
+	/** 清除定时器 */
+	XCharacter->GetWorldTimerManager().ClearTimer(TimerHandle);
 }

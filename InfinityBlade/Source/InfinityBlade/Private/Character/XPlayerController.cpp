@@ -45,6 +45,10 @@ void AXPlayerController::BeginPlay()
 
 	/** 初始化按钮点击事件 */
 	InitWidgetEvent();
+
+	/** 初始化冷却时间 */
+	IceStoneTotalCD = 5.f;
+	IceStoneCurrentCD = 0.f;
 }
 
 /** 绑定输入控件 */
@@ -257,9 +261,28 @@ void AXPlayerController::IceStoneBtnOnClickedEvent()
 		LockAI();
 		XAnimInstance->Montage_Play(XCharacter->IceStoneMontage, 1.f);
 		/** 开始其定时器 */
-		//XCharacter->GetWorldTimerManager().SetTimer(IceStoneTimer, this, &AXPlayerController::IceStoneCallback, 1.f, true);
-		///** 设置当前冷却时间 */
-		//IceStoneCurrentCD = IceStoneTotalCD;
+		XCharacter->GetWorldTimerManager().SetTimer(IceStoneTimer, this, &AXPlayerController::IceStoneCallback, 1.f, true);
+		/** 设置当前冷却时间 */
+		IceStoneCurrentCD = IceStoneTotalCD;
+	}
+}
+
+/** 寒冰之石定时器回调方法 */
+void AXPlayerController::IceStoneCallback()
+{
+	if (IceStoneCurrentCD == 0.f)
+	{
+		MainWidget->IceStoneCDBar->SetVisibility(ESlateVisibility::Hidden);
+		MainWidget->IceStoneCDText->SetVisibility(ESlateVisibility::Hidden);
+		XCharacter->GetWorldTimerManager().ClearTimer(IceStoneTimer);
+	}
+	else
+	{
+		MainWidget->IceStoneCDBar->SetVisibility(ESlateVisibility::Visible);
+		MainWidget->IceStoneCDText->SetVisibility(ESlateVisibility::Visible);
+		MainWidget->IceStoneCDBar->SetPercent(IceStoneCurrentCD / IceStoneTotalCD);
+		MainWidget->IceStoneCDText->SetText(FText::FromString(FString::FromInt(IceStoneCurrentCD) + "s"));
+		IceStoneCurrentCD--;
 	}
 }
 
