@@ -105,6 +105,16 @@ void AXPlayerController::InitWidgetEvent()
 	{
 		MainWidget->Button_Cure->OnClicked.AddDynamic(this, &AXPlayerController::CureBtnOnClickedEvent);
 	}
+	/** 雷霆之光按钮点击事件绑定 */
+	if (MainWidget->Button_Thunder)
+	{
+		MainWidget->Button_Thunder->OnClicked.AddDynamic(this, &AXPlayerController::ThunderBtnOnClickedEvent);
+	}
+	/** 无尽之刃按钮点击事件绑定 */
+	if (MainWidget->Button_XBlade)
+	{
+		MainWidget->Button_XBlade->OnClicked.AddDynamic(this, &AXPlayerController::XBladeBtnOnClickedEvent);
+	}
 }
 
 /** 攻击按钮点击事件 */
@@ -284,4 +294,35 @@ void AXPlayerController::CureBtnOnClickedEvent()
 	//	MsgCurrentCD = MsgTotalCD;
 	//	XCharacter->GetWorldTimerManager().SetTimer(MsgTimer, this, &AXPlayerController::MsgTimerCallback, 1.f, true);
 	//}
+}
+
+/** 雷霆之光技能点击事件 */
+void AXPlayerController::ThunderBtnOnClickedEvent()
+{
+	/** 判断恢复之术蒙太奇是否正在播放 */
+	if (XAnimInstance->bIsPlaying)
+	{
+		return;
+	}
+	/** 判断当前魔法值是否足够 */
+	if (XPlayerState->GetCurrentMP() >= 30.f)
+	{
+		XAnimInstance->Montage_Play(XCharacter->ThunderMontage, 1.f);
+	}
+}
+
+
+/** 无尽之刃技能点击事件 */
+void AXPlayerController::XBladeBtnOnClickedEvent()
+{
+	/** 判断恢复之术蒙太奇是否正在播放 */
+	if (XAnimInstance->bIsPlaying)
+	{
+		return;
+	}
+	/** 判断当前魔法值是否足够 */
+	if (XPlayerState->GetCurrentMP() >= 50.f)
+	{
+		XAnimInstance->Montage_Play(XCharacter->XBladeMontage, 1.f);
+	}
 }

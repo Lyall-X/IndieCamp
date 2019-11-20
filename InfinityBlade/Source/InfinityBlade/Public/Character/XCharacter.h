@@ -9,6 +9,7 @@
 #include "Weapon/Weapon.h"
 #include "Animation/AnimMontage.h"
 #include "Character/Skill/IceStone.h"
+#include "Character/Skill/XBlade.h"
 #include "XCharacter.generated.h"
 
 /**
@@ -49,7 +50,16 @@ public:
 		UAnimMontage* IceStoneMontage;
 	/** 恢复之术蒙太奇 */
 	UPROPERTY(EditAnywhere, Category = "Montage")
-		UAnimMontage* CureMontage;
+		UAnimMontage* CureMontage;	
+	/** 雷霆之光蒙太奇 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		UAnimMontage* ThunderMontage;
+	/** 无尽之刃类型 */
+	UPROPERTY(EditAnywhere, Category = "Skill")
+		TSubclassOf<AXBlade> XBladeClass;
+	/** 无尽之刃蒙太奇 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		UAnimMontage* XBladeMontage;
 public:
 	/** 构造方法 */
 	AXCharacter();

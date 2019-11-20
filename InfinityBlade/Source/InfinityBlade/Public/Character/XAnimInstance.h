@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "Character/XPlayerState.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "XAnimInstance.generated.h"
 
 /**
@@ -93,4 +94,10 @@ public:
 	/** 恢复之术产生通知 */
 	UFUNCTION()
 		void AnimNotify_UseCure(UAnimNotify* Notify);
+	/** 雷霆之光产生通知 */
+	UFUNCTION()
+		void AnimNotify_UseThunder(UAnimNotify* Notify);
+	/** 无尽之刃产生通知 */
+	UFUNCTION()
+		void AnimNotify_SpawnXBlade(UAnimNotify* Notify);
 };

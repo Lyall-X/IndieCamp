@@ -5,6 +5,7 @@
 #include "Character/XPlayerController.h"
 #include "Character/XCharacter.h"
 #include "Character/Skill/IceStone.h"
+#include "Character/Skill/XBlade.h"
 
 
 /** 更新人物移动速度 */
@@ -175,4 +176,41 @@ void UXAnimInstance::AnimNotify_UseCure(UAnimNotify* Notify)
 	XPlayerController->MainWidget->ProgressBar_HP->SetPercent(1.f - (XPlayerState->GetCurrentHP() / XCharacter->TotalHP));
 	/** 扣除魔法值 */
 	MinusMP(10.f);
+}
+
+/** 雷霆之光产生通知 */
+void UXAnimInstance::AnimNotify_UseThunder(UAnimNotify* Notify)
+{
+	/** 初始化状态 */
+	InitState();
+	/** 扣除魔法值 */
+	MinusMP(10.f);
+	/** 产生伤害 */
+	TArray<AActor*> IgnoreActors;
+	IgnoreActors.Add(TryGetPawnOwner());
+	//产生球形伤害
+	UGameplayStatics::ApplyRadialDamage(GetWorld(), 50.f, TryGetPawnOwner()->GetActorLocation(), 500.f, nullptr, IgnoreActors, TryGetPawnOwner(), TryGetPawnOwner()->GetController(), true, ECC_Visibility);
+}
+
+/** 无尽之刃产生通知 */
+void UXAnimInstance::AnimNotify_SpawnXBlade(UAnimNotify* Notify)
+{
+	/** 获取英雄角色 */
+	AXCharacter* XCharacter = Cast<AXCharacter>(TryGetPawnOwner());
+	/** 产生无尽之刃 */
+	AXBlade* XBlade = GetWorld()->SpawnActor<AXBlade>(XCharacter->XBladeClass);
+	/** 绑定规则 */
+	FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, EAttachmentRule::KeepRelative, EAttachmentRule::KeepRelative, true);
+	/** 绑定无尽之刃 */
+	XBlade->AttachToComponent(XCharacter->GetMesh(), AttachmentRules, TEXT("hand_rSocket"));
+	/** 扣除魔法值 */
+	MinusMP(50.f);
+	/** 初始化 */
+	InitState();
+	/** 加成伤害 */
+	XPlayerState->SetAttackDamage(XPlayerState->GetAttackDamage() + 100.f);
+	///** 设置为无尽之刃状态 */
+	//bIsXBlade = true;
+	///** 开启定时器 */
+	//XCharacter->GetWorldTimerManager().SetTimer(TimerHandle, this, &UXAnimInstance::TimerCallback, 10.f, false);
 }

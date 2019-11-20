@@ -80,4 +80,11 @@ public:
 	/** 恢复之术技能点击事件 */
 	UFUNCTION()
 		void CureBtnOnClickedEvent();
+
+	/** 雷霆之光技能点击事件 */
+	UFUNCTION()
+		void ThunderBtnOnClickedEvent();
+	/** 无尽之刃技能点击事件 */
+	UFUNCTION()
+		void XBladeBtnOnClickedEvent();
 };

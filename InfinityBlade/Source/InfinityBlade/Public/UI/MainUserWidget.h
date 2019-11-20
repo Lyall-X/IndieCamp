@@ -36,4 +36,12 @@ public:
 	UPROPERTY(Meta = (BindWidget))
 		UButton* Button_Cure;
 
+	/** 雷霆之光技能按钮 */
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_Thunder;
+
+	/** 无尽之刃技能按钮 */
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_XBlade;
+
 };
