@@ -7,6 +7,8 @@
 #include "BehaviorTree/BehaviorTreeComponent.h"
 #include "BehaviorTree/BlackboardComponent.h"
 #include "Weapon/Weapon.h"
+#include "AI/AIAnimInstance.h"
+#include "AI/AICharacter.h"
 #include "MonsterController.generated.h"
 
 /**
@@ -27,10 +29,19 @@ public:
 	/** 武器对象 */
 	UPROPERTY()
 		AWeapon* AIWeapon;
+	/** AI类 */
+	UPROPERTY()
+		AAICharacter* Monster;
+	/** AI动画实例 */
+	UPROPERTY()
+		UAIAnimInstance* AnimInstance;
 
 public:
 	/** 构造方法 */
 	AMonsterController();
 	/** 重写控制的方法 */
 	virtual void OnPossess(APawn* InPawn) override;
+	/** 武器重叠伤害事件 */
+	UFUNCTION()
+		void WeaponOverlapDamage(UPrimitiveComponent* OverlapedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, int32 BodyIndex, bool FromSweep, const FHitResult& HitResult);
 };

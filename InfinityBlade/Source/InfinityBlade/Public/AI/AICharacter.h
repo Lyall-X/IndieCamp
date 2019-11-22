@@ -34,6 +34,18 @@ public:
 	/** 行为树对象 */
 	UPROPERTY(EditAnywhere, Category = "AI")
 		UBehaviorTree* BehaviorTree;
+	/** 武器类 */
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+		TSubclassOf<AWeapon> AIWeaponClass;
+	/** 攻击动画蒙太奇数组 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		TArray<UAnimMontage*> AttackMontages;
+	/** 受伤动画蒙太奇 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		UAnimMontage* DamageMontage;
+	/** 死亡动画蒙太奇 */
+	UPROPERTY(EditAnywhere, Category = "Montage")
+		UAnimMontage* DeathMontage;
 
 public:
 	/** 构造方法 */

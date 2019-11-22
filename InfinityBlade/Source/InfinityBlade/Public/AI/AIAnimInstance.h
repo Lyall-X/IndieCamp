@@ -18,6 +18,8 @@ public:
 	/** 人物的移动速度 */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float Speed;
+	/** 是否处于播放状态 */
+	bool bIsPlaying;
 
 public:
 	/** 更新人物移动速度 */
