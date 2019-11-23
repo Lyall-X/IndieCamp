@@ -12,18 +12,18 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	/** 获取Controller */
 	AMonsterController* Controller = Cast<AMonsterController>(OwnerComp.GetAIOwner());
 
-	///**一定范围内找到然后移动过来*/
-	//UBlackboardComponent* Blackboard = Controller->BlackboardComponent;
-	///**获取目标位置*/
-	//FVector TargetLocation = Blackboard->GetValueAsVector(TEXT("TargetLocation"));
-	///**获取两者距离*/
-	//float Distance = FVector::Distance(Controller->GetPawn()->GetActorLocation(), TargetLocation);
-	///**判断移动*/
-	//if (Distance <= Dis)
-	//{
-	//	Controller->MoveToLocation(TargetLocation);
-	//	return EBTNodeResult::Succeeded;
-	//}
+	/**一定范围内找到然后移动过来*/
+	UBlackboardComponent* Blackboard = Controller->BlackboardComponent;
+	/**获取目标位置*/
+	FVector TargetLocation = Blackboard->GetValueAsVector(TEXT("TargetLocation"));
+	/**获取两者距离*/
+	float Distance = FVector::Distance(Controller->GetPawn()->GetActorLocation(), TargetLocation);
+	/**判断移动*/
+	if (Distance <= Dis)
+	{
+		Controller->MoveToLocation(TargetLocation);
+		return EBTNodeResult::Succeeded;
+	}
 
 	///** 获取AI */
 	//AAICharacter* Monster = Cast<AAICharacter>(Controller->GetPawn());
@@ -40,5 +40,5 @@ EBTNodeResult::Type UBTTask_Attack::ExecuteTask(UBehaviorTreeComponent& OwnerCom
 	//	AIAnimInstance->Montage_Play(Monster->AttackMontages[RandomNum], 1.f);
 	//}
 
-	return EBTNodeResult::Succeeded;
+	return EBTNodeResult::Failed;
 }
