@@ -2,6 +2,8 @@
 
 
 #include "XCharacter.h"
+#include "Character/XPlayerController.h"
+#include "Character/XPlayerState.h"
 
 /** 构造方法 */
 AXCharacter::AXCharacter()
@@ -28,4 +30,13 @@ void AXCharacter::BeginPlay()
 	
 }
 
+/** 受到伤害的方法 */
+float AXCharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	AXPlayerController* Controller = Cast<AXPlayerController>(GetController());
+	AXPlayerState* PlayerState = Controller->XPlayerState;
+	PlayerState->SetCurrentHP(PlayerState->GetCurrentHP() - Damage);
+	Controller->UpdateUI();
 
+	return Damage;
+}

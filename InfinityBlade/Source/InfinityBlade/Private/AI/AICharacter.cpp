@@ -27,10 +27,29 @@ void AAICharacter::BeginPlay()
 /** 重写收到伤害的方法 */
 float AAICharacter::TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	//防止自己打到自己
+	GEngine->AddOnScreenDebugMessage(-1, 2.f, FColor::Red, "Damage = " + FString::SanitizeFloat(Damage));
+
+	if (DamageCauser == this)
+	{
+		return 0.f;
+	}
+
 	/** 当前血量减少 */
 	CurrentHP -= Damage;
 	/** 更新UI */
 	HPBar->SetPercent(CurrentHP / TotalHP);
+	/** 判断血量 */
+	if (CurrentHP <= 0)
+	{
+		/** 播放死亡动画 */
+		GetMesh()->GetAnimInstance()->Montage_Play(DeathMontage, 1.f);
+	}
+	else
+	{
+		/** 播放受伤动画 */
+		GetMesh()->GetAnimInstance()->Montage_Play(DamageMontage, 1.f);
+	}
 
 	return Damage;
 }

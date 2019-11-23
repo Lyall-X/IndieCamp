@@ -67,5 +67,6 @@ public:
 protected:
 	/** 游戏开始调用的方法 */
 	virtual void BeginPlay() override;
-
+	/** 受到伤害的方法 */
+	virtual float TakeDamage(float Damage, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 };

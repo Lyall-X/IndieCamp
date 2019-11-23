@@ -14,9 +14,6 @@ UCLASS()
 class INFINITYBLADE_API UBTTask_Attack : public UBTTaskNode
 {
 	GENERATED_BODY()
-public:
-	UPROPERTY(EditAnywhere, Category = "Prop")
-		float Dis;
 
 public:
 	/** 重写执行任务节点 */
