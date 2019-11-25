@@ -12,7 +12,8 @@
 				"UMG",
 				"AugmentedReality",
 				"Engine",
-				"AIModule"
+				"AIModule",
+				"CoreUObject"
 			]
 		}
 	]

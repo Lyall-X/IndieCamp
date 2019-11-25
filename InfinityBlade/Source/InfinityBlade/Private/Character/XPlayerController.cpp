@@ -5,6 +5,8 @@
 #include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
 #include "Runtime/Engine/Classes/Kismet/KismetMathLibrary.h"
 #include "Character/Skill/IceStone.h"
+//#include "Pickup/ItemInfo.h"
+#include "UI/BagItemWidget.h"
 #include "AI/AICharacter.h"
 
 /** 游戏开始调用的方法 */
@@ -22,6 +24,7 @@ void AXPlayerController::BeginPlay()
 	/** 初始化玩家状态数值 */
 	InitState();
 
+	CharacterWidget = CreateWidget<UCharacterWidget>(GetGameInstance(), LoadClass<UCharacterWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_CharacterWidget.BP_CharacterWidget_C'")));
 	/** 初始化主界面UI */
 	MainWidget = CreateWidget<UMainUserWidget>(GetGameInstance(), LoadClass<UMainUserWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_MainUserWidget.BP_MainUserWidget_C'")));
 	/** 添加到视口 */
@@ -118,6 +121,11 @@ void AXPlayerController::InitWidgetEvent()
 	if (MainWidget->Button_XBlade)
 	{
 		MainWidget->Button_XBlade->OnClicked.AddDynamic(this, &AXPlayerController::XBladeBtnOnClickedEvent);
+	}
+	/** 人物角色信息按钮点击事件绑定 */
+	if (MainWidget->Button_Package)
+	{
+		MainWidget->Button_Package->OnClicked.AddDynamic(this, &AXPlayerController::CharacterBtnOnClickedEvent);
 	}
 }
 
@@ -363,4 +371,30 @@ void AXPlayerController::MsgTimerCallback()
 		MainWidget->MsgText->SetVisibility(ESlateVisibility::Visible);
 		MsgCurrentCD--;
 	}
+}
+
+/** 人物角色信息点击事件 */
+void AXPlayerController::CharacterBtnOnClickedEvent()
+{
+	///** 清空背包盒子 */
+	//CharacterWidget->ScrollBox->ClearChildren();
+	///** 遍历角色物品数组 */
+	//for (int i = 0; i < XCharacter->PickupArray.Num(); i++)
+	//{
+	//	/** 物品信息 */
+	//	FPickupInfo Info = XCharacter->PickupArray[i];
+	//	/** 创建Item */
+	//	UBagItemWidget* ItemWidget = CreateWidget<UBagItemWidget>(GetGameInstance(), LoadClass<UBagItemWidget>(nullptr, TEXT("WidgetBlueprint'/Game/UI/BP_BagItem.BP_BagItem_C'")));
+	//	/** 设置信息 */
+	//	ItemWidget->PickupId = Info.ID;
+	//	ItemWidget->Name->SetText(Info.Name);
+	//	ItemWidget->Pic->SetBrushFromTexture(Info.Pic);
+	//	ItemWidget->Desc->SetText(Info.Desc);
+	//	ItemWidget->Num = Info.Num;
+	//	ItemWidget->InfoType = Info.Type;
+	//	/** 添加到背包滚动盒子 */
+	//	CharacterWidget->ScrollBox->AddChild(ItemWidget);
+	//}
+	///** 添加到视口 */
+	CharacterWidget->AddToViewport();
 }

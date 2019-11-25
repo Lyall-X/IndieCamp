@@ -54,4 +54,7 @@ public:
 	UPROPERTY(Meta = (BindWidget))
 		UTextBlock* MsgText;
 
+	/** 人物角色信息按钮 */
+	UPROPERTY(Meta = (BindWidget))
+		UButton* Button_Package;
 };

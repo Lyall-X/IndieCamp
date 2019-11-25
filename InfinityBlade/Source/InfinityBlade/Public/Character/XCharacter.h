@@ -10,7 +10,9 @@
 #include "Animation/AnimMontage.h"
 #include "Character/Skill/IceStone.h"
 #include "Character/Skill/XBlade.h"
+#include "Pickup/ItemInfo.h"
 #include "XCharacter.generated.h"
+
 
 /**
  * 英雄角色类
@@ -60,6 +62,10 @@ public:
 	/** 无尽之刃蒙太奇 */
 	UPROPERTY(EditAnywhere, Category = "Montage")
 		UAnimMontage* XBladeMontage;
+
+	/** 物品数组 */
+	UPROPERTY()
+		TArray<FPickupInfo> PickupArray;
 public:
 	/** 构造方法 */
 	AXCharacter();

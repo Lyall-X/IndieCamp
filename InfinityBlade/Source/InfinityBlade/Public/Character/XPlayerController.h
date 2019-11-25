@@ -8,6 +8,7 @@
 #include "UI/MainUserWidget.h"
 #include "Character/XAnimInstance.h"
 #include "Character/XPlayerState.h"
+#include "UI/CharacterWidget.h"
 #include "XPlayerController.generated.h"
 
 /**
@@ -36,6 +37,9 @@ public:
 	/** 主界面UI */
 	UPROPERTY()
 		UMainUserWidget* MainWidget;
+	/** 角色用户信息UI */
+	UPROPERTY()
+		UCharacterWidget* CharacterWidget;
 public:
 	/** 武器对象 */
 	UPROPERTY()
@@ -103,7 +107,10 @@ public:
 	UFUNCTION()
 		void XBladeBtnOnClickedEvent();
 
-
 	/** 消息提示定时器回调方法 */
 	void MsgTimerCallback();
+
+	/** 人物角色信息点击事件 */
+	UFUNCTION()
+		void CharacterBtnOnClickedEvent();
 };
